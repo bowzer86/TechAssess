@@ -24,7 +24,7 @@ public class DmeOrderParserTests
     }
 
     [Fact]
-    public void Parse_NoteWithOxygen_ReturnOxygenOrder()
+    public void Parse_NoteWithOxygen_ReturnsOxygenOrder()
     {
         // Arrange
         string note = "Patient needs oxygen at 2.5 L for sleep and exertion. Ordered by Dr. Jones.";
@@ -43,7 +43,7 @@ public class DmeOrderParserTests
     }
 
     [Fact]
-    public void Parse_NoteWithWheelchair_ReturnWheelchairOrder()
+    public void Parse_NoteWithWheelchair_ReturnsWheelchairOrder()
     {
         // Arrange
         string note = "Patient requires a wheelchair. Ordered by Dr. Lee.";
