@@ -42,11 +42,7 @@ public static class DmeOrderParser
     /// <returns>
     /// A <see cref="DmeOrder"/> object populated with extracted details.
     /// </returns>
-<<<<<<< HEAD
     private static async Task<DmeOrder> ParseWithAI(string note)
-=======
-    private static async Task<DmeOrder> ParseWithOpenAIAsync(string note)
->>>>>>> c8529c8774516197746140c18b8265328625f3a1
     {
         Console.WriteLine($"Parsing note into a DME Order using AI assistant");
         // set up the client
