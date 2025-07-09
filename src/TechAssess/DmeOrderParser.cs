@@ -42,11 +42,7 @@ public static class DmeOrderParser
     /// <returns>
     /// A <see cref="DmeOrder"/> object populated with extracted details.
     /// </returns>
-<<<<<<< HEAD
     private static async Task<DmeOrder> ParseWithAI(string note)
-=======
-    private static async Task<DmeOrder> ParseWithOpenAIAsync(string note)
->>>>>>> c8529c8774516197746140c18b8265328625f3a1
     {
         Console.WriteLine($"Parsing note into a DME Order using AI assistant");
         // set up the client
@@ -68,9 +64,9 @@ For DeviceType, if it mentions 'oxygen', you must return 'Oxygen Tank', if it me
 For OxygenLiters, you must include the L in the value if it is mentioned (include the space between the number and the L), but not the per minute, if it is not mentioned, return null
 For AddOns, examples are humidifier, if the items are empty strings, return null
 For OxygenUsage, if it mentions sleep and exertion, return 'sleep and exertion', if it only mentions sleep, return 'sleep', if it only mentions exertion, return 'exertion', otherwise return null
-For MaskType, don't include the word mask, just the type (e.g., full face), if the value would be an '', you must return null
+For MaskType, don't include the word mask, just the type (e.g., full face), if the value would be an empty string, you must return null
 For Qualifier, if it mentions a AHI being greater than or less than a number, include AHI with the number and the greater than or less than sign, do not include preposition words like during, if it's not mentioned return empty string
-Return the result purely as a JSON object with these fields with no other text before or after the JSON object.
+Return the result purely as a JSON object with these fields with no other text, special characters, or formatting before or after the JSON object.
 
 Physician note:
 {note}
