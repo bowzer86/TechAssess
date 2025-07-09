@@ -25,7 +25,11 @@ public static class DmeOrderParser
         Console.WriteLine($"Parsing following note into a DME Order:\n\n{note}");
         try
         {
+<<<<<<< HEAD
             var aiResult = ParseWithAI(note).GetAwaiter().GetResult();
+=======
+            var aiResult = ParseWithOpenAIAsync(note).GetAwaiter().GetResult();
+>>>>>>> c8529c8774516197746140c18b8265328625f3a1
             return aiResult;
         } catch (Exception ex)
         {
@@ -42,7 +46,11 @@ public static class DmeOrderParser
     /// <returns>
     /// A <see cref="DmeOrder"/> object populated with extracted details.
     /// </returns>
+<<<<<<< HEAD
     private static async Task<DmeOrder> ParseWithAI(string note)
+=======
+    private static async Task<DmeOrder> ParseWithOpenAIAsync(string note)
+>>>>>>> c8529c8774516197746140c18b8265328625f3a1
     {
         Console.WriteLine($"Parsing note into a DME Order using AI assistant");
         // set up the client
