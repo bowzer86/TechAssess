@@ -1,4 +1,6 @@
-﻿namespace TechAssess.src;
+﻿using Newtonsoft.Json.Linq;
+
+namespace TechAssess.src;
 
 /// <summary>
 /// Reads physician notes from file or provides a default.
@@ -18,21 +20,36 @@ public static class PhysicianNoteReader
     {
         try
         {
-            Console.WriteLine("Attempting to read physician note from file: " + filePath);
-            if (File.Exists(filePath))
-            {
-                Console.WriteLine("Physician note found, reading content...");
-                return File.ReadAllText(filePath);
-            }
-            else
+            Console.WriteLine($"Attempting to read physician note from file: {filePath}");
+            if (!File.Exists(filePath))
             {
                 Console.WriteLine($"Could not find physician note: {filePath}.\nProceeding with default physician note");
+                return GetDefaultNote();
+            }
+
+            var content = File.ReadAllText(filePath);
+
+            // Try to parse as JSON and extract "data" property if present
+            try
+            {
+                var jObj = JObject.Parse(content);
+                Console.WriteLine("Physician note is in JSON format");
+                var dataProp = jObj["data"];
+                return dataProp?.ToString() ?? content;
+            }
+            catch
+            {
+                Console.WriteLine("Physician note is in Text format");
+                return content;
             }
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine($"Error reading physician note: {ex}.\nProceeding with default physician note");
+            Console.Error.WriteLine($"Error reading physician note: {ex.Message}\nProceeding with default physician note");
+            return GetDefaultNote();
         }
-        return "Patient needs a CPAP with full face mask and humidifier. AHI > 20. Ordered by Dr. Cameron.";
     }
+
+    private static string GetDefaultNote() =>
+        "Patient needs a CPAP with full face mask and humidifier. AHI > 20. Ordered by Dr. Cameron.";
 }

@@ -21,7 +21,7 @@ public class DmeOrder
         {
             ["device"] = DeviceType,
             ["mask_type"] = MaskType,
-            ["add_ons"] = AddOns != null ? new JArray(AddOns) : null,
+            ["add_ons"] = AddOns,
             ["qualifier"] = Qualifier,
             ["ordering_provider"] = OrderingProvider
         };
