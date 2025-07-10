@@ -13,6 +13,7 @@
     - Assumed solution and project folder structure was flexible
     - Assumed Ollama was acceptable for AI integration, as it is a free tool with no API key required
     - Assumed if the AI parser throws an error during reading the note, it will resort to using the manual parsing method instead.
+    - Assumed default format is JSON, with plaintext as a fallback
 - Instructions to run the project (if needed)
     - In order to use AI integration, you'll need to install Ollama from https://ollama.com/
     - After installing Ollama, run the following command to pull the llama3.1:8b model:

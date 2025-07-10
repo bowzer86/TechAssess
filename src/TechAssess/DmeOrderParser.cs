@@ -71,15 +71,16 @@ Return the result purely as a JSON object with these fields with no other text, 
 Physician note:
 {note}
 ";
-        var responseText = new StringBuilder();
+        StringBuilder responseText = new();
         await foreach (var stream in ollama.GenerateAsync(prompt))
             _ = responseText.Append(stream?.Response);
 
-        Console.WriteLine($"Response from AI model:\n{responseText}\n\n");
+        string cleanedResponse = responseText.ToString().Trim('`');
+        Console.WriteLine($"Response from AI model:\n{cleanedResponse}\n\n");
         // Parse the JSON returned by the model
         try
         {
-            var order = JsonSerializer.Deserialize<DmeOrder>(responseText.ToString(), new JsonSerializerOptions
+            var order = JsonSerializer.Deserialize<DmeOrder>(cleanedResponse.ToString(), new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });

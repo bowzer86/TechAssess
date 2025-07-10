@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="data\physician_note.txt">
+    <Content Include="data\physician_note_plaintext.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -20,6 +20,12 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="OllamaSharp" Version="5.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="data\physician_note.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
