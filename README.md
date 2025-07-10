@@ -25,7 +25,6 @@
         - Add more comprehensive unit tests to cover edge cases and improve test reliability.
         - Consider using a more advanced AI model or service with better control over parameters like temperature.
         - Enhance the AI parser to handle more complex input formats and improve error handling.
-        - Implement a configuration file for easier management of settings and parameters.
 - Instructions to run the project
     - In order to use AI integration, you'll need to install Ollama from https://ollama.com/
     - After installing Ollama, run the following command to pull the llama3.1:8b model:
