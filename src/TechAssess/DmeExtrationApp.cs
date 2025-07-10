@@ -1,4 +1,4 @@
-namespace TechAssess.src;
+namespace TechAssess;
 
 /// <summary>
 /// Main application for DME extraction.
@@ -10,11 +10,13 @@ class DmeExtrationApp
     {
         Console.WriteLine("Starting DME extraction App...");
 
-        string physicianNote = PhysicianNoteReader.Read("data/physician_note.txt");
+        // Load application configuration
+        string? filePath = AppConfiguration.AppSettings["AppSettings:NoteFilePath"];
+
+        string physicianNote = PhysicianNoteReader.Read(filePath ?? "data/physician_note.txt");
         var dmeOrder = DmeOrderParser.Parse(physicianNote);
         var orderJson = dmeOrder.ToJson();
-
-        PhysicianAlertService.SendOrder(orderJson);
+        PhysicianAPIService.SendOrder(orderJson);
 
         return 0;
     }

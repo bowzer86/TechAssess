@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Text;
 
-namespace TechAssess.src;
+namespace TechAssess;
 
 /// <summary>
 /// Handles alerting the physician via API.
 /// </summary>
-public static class PhysicianAlertService
+public static class PhysicianAPIService
 {
     /// <summary>
     /// Sends a DME order to the physician's API endpoint as a JSON payload.
@@ -17,11 +17,12 @@ public static class PhysicianAlertService
     public static void SendOrder(JObject orderJson)
     {
         using var httpClient = new HttpClient();
-        var apiUrl = "https://alert-api.com/DrExtract";
+        string? apiUrl = AppConfiguration.AppSettings["AppSettings:ApiUrl"];
+
         var jsonContent = new StringContent(orderJson.ToString(), Encoding.UTF8, "application/json");
         try
         {
-            Console.WriteLine($"Sending Order\n\n{orderJson.ToString()}\n\nto api endpoint at {apiUrl}");
+            Console.WriteLine($"Sending Order to api endpoint at {apiUrl}\n\n{orderJson.ToString()}\n");
             var response = httpClient.PostAsync(apiUrl, jsonContent).GetAwaiter().GetResult();
         }
         catch (Exception)

@@ -4,7 +4,8 @@
     - Visual Studio 2022
 - AI development tools:
     - GitHub Copilot
-    - Ollama (for AI model integration)
+    - ChatGPT
+    - Ollama
 - Any assumptions, limitations, or future improvements
     - Assumptions:
         - .NET 9.0 vs 8.0
@@ -29,6 +30,7 @@
     - In order to use AI integration, you'll need to install Ollama from https://ollama.com/
     - After installing Ollama, run the following command to pull the llama3.1:8b model:
     ```ollama pull llama3.1:8b``` (this could take a few minutes to download the model)
-    - Once tha's done, you can Run or Debug directly from Visual Studio OR run in Terminal: 
+    - You can modify the application settings in `src/TechAssess/appsettings.json`
+    - Once that's done, you can Run or Debug directly from Visual Studio OR run in Terminal: 
     ```dotnet run --project src/TechAssess```
     - To Test: Run DmeOrderParserTests from Visual Studio or run ```dotnet test``` in Terminal (note that some Unit tests will fail intermittenly due to the unpredictable nature of AI's answers and inability to set the "temperature" setting to 0 on this particular model).

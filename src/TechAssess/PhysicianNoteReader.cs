@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace TechAssess.src;
+namespace TechAssess;
 
 /// <summary>
 /// Reads physician notes from file or provides a default.

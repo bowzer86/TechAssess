@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace TechAssess.src;
+namespace TechAssess;
 
 /// <summary>
 /// Stores DME order details.

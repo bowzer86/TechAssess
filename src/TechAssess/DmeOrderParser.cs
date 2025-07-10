@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace TechAssess.src;
+namespace TechAssess;
 
 /// <summary>
 /// Parses DME order details from a physician note.
@@ -23,6 +23,15 @@ public static class DmeOrderParser
     {
         // Synchronous wrapper for async call (for demo purposes)
         Console.WriteLine($"Parsing following note into a DME Order:\n\n{note}");
+        string? useAIConfigString = AppConfiguration.AppSettings["AppSettings:UseAI"];
+        bool useAI = bool.TryParse(useAIConfigString, out bool result) ? result : true;
+
+        if(!useAI)
+        {
+            Console.WriteLine("App has been configured to manually parse note");
+            return ParseManually(note);
+        }
+
         try
         {
             var aiResult = ParseWithAI(note).GetAwaiter().GetResult();
@@ -62,7 +71,7 @@ Extract the following fields from the physician note:
 
 For DeviceType, if it mentions 'oxygen', you must return 'Oxygen Tank', if it mentions CPAP, you must return 'CPAP', if it mentions 'wheelchair', you must return 'Wheelchair'
 For OxygenLiters, you must include the L in the value if it is mentioned (include the space between the number and the L), but not the per minute, if it is not mentioned, return null
-For AddOns, examples are humidifier, if the items are empty strings, return null
+For AddOns, examples are humidifier, if the item is an empty string, return null
 For OxygenUsage, if it mentions sleep and exertion, return 'sleep and exertion', if it only mentions sleep, return 'sleep', if it only mentions exertion, return 'exertion', otherwise return null
 For MaskType, don't include the word mask, just the type (e.g., full face), if the value would be an empty string, you must return null
 For Qualifier, if it mentions a AHI being greater than or less than a number, include AHI with the number and the greater than or less than sign, do not include preposition words like during, if it's not mentioned return empty string
@@ -71,12 +80,21 @@ Return the result purely as a JSON object with these fields with no other text, 
 Physician note:
 {note}
 ";
-        StringBuilder responseText = new();
-        await foreach (var stream in ollama.GenerateAsync(prompt))
-            _ = responseText.Append(stream?.Response);
 
-        string cleanedResponse = responseText.ToString().Trim('`');
-        Console.WriteLine($"Response from AI model:\n{cleanedResponse}\n\n");
+        StringBuilder rawResponseStringBuilder = new();
+        await foreach (var stream in ollama.GenerateAsync(prompt))
+            rawResponseStringBuilder.Append(stream?.Response);
+        string rawResponseString = rawResponseStringBuilder.ToString();
+
+        int start = rawResponseString.IndexOf('{');
+        int end = rawResponseString.LastIndexOf('}');
+
+        string cleanedResponse = (start >= 0 && end >= start)
+            ? rawResponseString.Substring(start, end - start + 1)
+            : string.Empty;
+
+        Console.WriteLine($"Response from AI model:\n\n{cleanedResponse}\n");
+
         // Parse the JSON returned by the model
         try
         {
